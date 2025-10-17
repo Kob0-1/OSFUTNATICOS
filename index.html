@@ -1,147 +1,169 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FUTNATICOS</title>
+  <title>Futnaticos</title>
 
-  <!-- Tipografias -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Botão do Pânico -->
-  <a class="panic-button" href="tel:190" aria-label="Ligar 190">
-    <span>190</span>
+  <!-- Panic Button -->
+  <a class="panic-button" href="tel:190" aria-label="Ligar 190 - Polícia">
+    <span class="material-symbols-rounded">warning</span>
+    Ligar 190
   </a>
 
-  <!-- Cabeçalho fixo -->
+  <!-- Header -->
   <header class="header">
     <div class="container header-inner">
-      <div class="brand" data-nav="#home">
-        <div class="logo-mark" aria-hidden="true">⚽</div>
-        <div class="logo-text">FUTNATICOS</div>
+      <div class="logo">
+        <span class="logo-icon material-symbols-rounded">stadium</span>
+        <span class="logo-text">Futnaticos</span>
       </div>
+
       <nav class="nav">
-        <a class="nav-link active" href="#home">Home</a>
-        <a class="nav-link" href="#notificacoes">Notificações</a>
-        <a class="nav-link" id="menu-perfil" href="#perfil" style="display:none;">Meu Perfil</a>
-        <a class="nav-link" id="menu-login" href="#login">Login/Registrar</a>
-        <button class="btn btn-accent btn-small" id="header-criar">
-          <span class="icon">＋</span> Criar Partida
-        </button>
+        <a href="#" class="nav-link" data-view="home">Home</a>
+        <a href="#" class="nav-link" data-view="login" id="loginLink">Login/Registrar</a>
+        <a href="#" class="nav-link hidden" data-view="profile" id="profileLink">Meu Perfil</a>
       </nav>
+
+      <button class="btn btn-accent" id="createMatchHeader">
+        <span class="material-symbols-rounded">add</span>
+        Criar Partida
+      </button>
     </div>
   </header>
 
   <main>
-    <!-- Home -->
-    <section id="home" class="screen show">
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-overlay"></div>
-        <div class="container hero-content">
-          <h1 class="hero-title">Encontre ou organize partidas de futebol perto de você</h1>
-          <form id="buscaForm" class="search-bar">
-            <div class="input">
-              <label for="inputLocal">Localização</label>
-              <input id="inputLocal" name="local" type="text" placeholder="Use sua localização" />
-              <button type="button" class="btn btn-light btn-small" id="btnGeo">Usar minha localização</button>
-            </div>
-            <div class="input">
-              <label for="inputData">Data</label>
-              <input id="inputData" name="data" type="date" />
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Buscar</button>
-            </div>
-          </form>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-overlay"></div>
+      <div class="container hero-content">
+        <h1 class="hero-title">Encontre ou organize partidas de futebol perto de você</h1>
+        <form class="search-form" id="searchForm">
+          <div class="field-group">
+            <label class="field-label" for="locationInput">Localização</label>
+            <input type="text" id="locationInput" placeholder="Digite um bairro ou permita geolocalização" />
+            <button type="button" class="btn btn-secondary" id="geoBtn">
+              <span class="material-symbols-rounded">my_location</span>
+              Usar localização
+            </button>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="dateInput">Data</label>
+            <input type="date" id="dateInput" />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            <span class="material-symbols-rounded">search</span>
+            Buscar
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Filters + List -->
+    <section class="container content-grid" id="homeView">
+      <aside class="filters">
+        <h3 class="section-title">Filtros</h3>
+        <div class="filter-group">
+          <label class="field-label">Tipo de campo</label>
+          <select id="filterFieldType">
+            <option value="">Todos</option>
+            <option value="grama">Grama</option>
+            <option value="society">Society</option>
+            <option value="futsal">Futsal</option>
+          </select>
         </div>
-      </section>
+        <div class="filter-group">
+          <label class="field-label">Nível</label>
+          <select id="filterLevel">
+            <option value="">Todos</option>
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label class="field-label">Horário</label>
+          <input type="time" id="filterTime" />
+        </div>
+      </aside>
 
-      <!-- Conteúdo Home -->
-      <section class="container content-grid">
-        <!-- Filtros laterais -->
-        <aside class="filters">
-          <h3 class="section-title">Filtros</h3>
-          <div class="filter-group">
-            <label for="filtroBairro"><strong>Bairro:</strong></label>
-            <input id="filtroBairro" type="text" placeholder="Ex.: Centro" />
-          </div>
-          <div class="filter-group">
-            <label for="filtroHorario"><strong>Horário:</strong></label>
-            <select id="filtroHorario">
-              <option value="">Qualquer</option>
-              <option value="manha">Manhã</option>
-              <option value="tarde">Tarde</option>
-              <option value="noite">Noite</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="filtroCampo"><strong>Tipo de campo:</strong></label>
-            <select id="filtroCampo">
-              <option value="">Todos</option>
-              <option value="grama">Grama</option>
-              <option value="society">Society</option>
-              <option value="futsal">Futsal</option>
-            </select>
-          </div>
-          <div class="filter-group">
-            <label for="filtroNivel"><strong>Nível:</strong></label>
-            <select id="filtroNivel">
-              <option value="">Qualquer</option>
-              <option value="iniciante">Iniciante</option>
-              <option value="intermediario">Intermediário</option>
-              <option value="avancado">Avançado</option>
-            </select>
-          </div>
-          <button id="btnAplicarFiltros" class="btn btn-outline">Aplicar filtros</button>
-        </aside>
+      <section class="list">
+        <div class="list-header">
+          <h2 class="section-title">Partidas próximas</h2>
+          <button class="btn btn-accent" id="createMatchList">
+            <span class="material-symbols-rounded">add</span>
+            Criar Partida
+          </button>
+        </div>
 
-        <!-- Lista de Partidas -->
-        <section class="matches">
-          <div class="list-header">
-            <h3 class="section-title">Partidas próximas</h3>
-            <button class="btn btn-accent" id="home-criar">
-              <span class="icon">＋</span> Criar Partida
-            </button>
+        <!-- Empty state (no matches) -->
+        <div class="empty-state" id="emptyState">
+          <div class="empty-illustration">
+            <span class="material-symbols-rounded">sports_soccer</span>
           </div>
+          <h3>Nenhuma partida registrada</h3>
+          <p>Use “Criar Partida” para ser o primeiro a organizar um jogo.</p>
+        </div>
 
-          <div id="emptyState" class="empty-state">
-            <div class="empty-illustration">🏟️</div>
-            <h4>Nenhuma partida registrada ainda</h4>
-            <p>Seja o primeiro a organizar um jogo na sua região.</p>
-            <button class="btn btn-accent" id="empty-criar">
-              <span class="icon">＋</span> Criar Partida
-            </button>
-          </div>
-
-          <div id="matchesList" class="cards"></div>
-
-          <div id="sugestoes" class="suggestions" style="display:none;">
-            <h4>Sugestões para você</h4>
-            <div id="sugestoesList" class="cards"></div>
-          </div>
-        </section>
+        <!-- Cards container -->
+        <div class="cards" id="matchesContainer" aria-live="polite"></div>
       </section>
     </section>
 
-    <!-- Criar Partida -->
-    <section id="criar" class="screen">
-      <div class="container narrow">
-        <h2 class="page-title">Criar Partida</h2>
-        <form id="criarForm" class="form-card">
-          <div class="form-row">
-            <div class="field">
-              <label for="jogoNome">Nome do jogo</label>
-              <input id="jogoNome" type="text" placeholder="Ex.: Pelada de sábado" required />
+    <!-- Create Match Modal -->
+    <div class="modal-backdrop hidden" id="createModal">
+      <div class="modal">
+        <div class="modal-header">
+          <h3>Criar Partida</h3>
+          <button class="icon-btn" id="closeCreateModal" aria-label="Fechar">
+            <span class="material-symbols-rounded">close</span>
+          </button>
+        </div>
+        <form class="form" id="createMatchForm">
+          <div class="field-group">
+            <label class="field-label" for="matchName">Nome do jogo</label>
+            <input type="text" id="matchName" placeholder="Ex.: Pelada de sábado" required />
+          </div>
+
+          <div class="two-cols">
+            <div class="field-group">
+              <label class="field-label" for="matchDate">Data</label>
+              <input type="date" id="matchDate" required />
             </div>
-            <div class="field">
-              <label for="jogoCampo">Tipo de campo</label>
-              <select id="jogoCampo" required>
-                <option value="">Selecione</option>
+            <div class="field-group">
+              <label class="field-label" for="matchTime">Hora</label>
+              <input type="time" id="matchTime" required />
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label class="field-label" for="matchPlace">Local</label>
+            <input type="text" id="matchPlace" placeholder="Endereço ou nome do campo" required />
+            <div class="map-placeholder">
+              <span class="material-symbols-rounded">map</span>
+              <span>Mapa interativo (integração futura)</span>
+            </div>
+          </div>
+
+          <div class="two-cols">
+            <div class="field-group">
+              <label class="field-label" for="matchPlayers">Quantidade de jogadores</label>
+              <input type="number" id="matchPlayers" min="2" max="50" value="10" required />
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="matchFieldType">Tipo de campo</label>
+              <select id="matchFieldType" required>
                 <option value="grama">Grama</option>
                 <option value="society">Society</option>
                 <option value="futsal">Futsal</option>
@@ -149,155 +171,143 @@
             </div>
           </div>
 
-          <div class="form-row">
-            <div class="field">
-              <label for="jogoData">Data</label>
-              <input id="jogoData" type="date" required />
+          <div class="two-cols">
+            <div class="field-group">
+              <label class="field-label" for="matchFee">Valor de participação (opcional)</label>
+              <input type="number" id="matchFee" min="0" step="1" placeholder="R$" />
             </div>
-            <div class="field">
-              <label for="jogoHora">Hora</label>
-              <input id="jogoHora" type="time" required />
-            </div>
-            <div class="field">
-              <label for="jogoVagas">Quantidade de jogadores</label>
-              <input id="jogoVagas" type="number" min="2" max="30" placeholder="Ex.: 10" required />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="field">
-              <label for="jogoValor">Valor de participação (opcional)</label>
-              <input id="jogoValor" type="number" min="0" step="1" placeholder="Ex.: 20" />
-            </div>
-            <div class="field">
-              <label for="jogoGenero">Categoria</label>
-              <select id="jogoGenero">
+            <div class="field-group">
+              <label class="field-label" for="matchGender">Categoria</label>
+              <select id="matchGender">
                 <option value="misto">Misto</option>
-                <option value="masculino">Masculino</option>
                 <option value="feminino">Feminino</option>
-              </select>
-            </div>
-            <div class="field">
-              <label for="jogoNivel">Nível</label>
-              <select id="jogoNivel">
-                <option value="iniciante">Iniciante</option>
-                <option value="intermediario">Intermediário</option>
-                <option value="avancado">Avançado</option>
+                <option value="masculino">Masculino</option>
               </select>
             </div>
           </div>
 
-          <div class="field">
-            <label for="jogoLocal">Local</label>
-            <input id="jogoLocal" type="text" placeholder="Nome do campo, endereço, bairro" required />
+          <div class="field-group">
+            <label class="field-label" for="matchChat">Chat pré-partida</label>
+            <select id="matchChat">
+              <option value="on">Ativado</option>
+              <option value="off">Desativado</option>
+            </select>
           </div>
 
-          <!-- Mapa interativo simples (mock) -->
-          <div class="map-wrapper">
-            <div class="map" id="mapCriar" aria-label="Mapa interativo">
-              <div class="map-help">Clique no mapa para marcar o local (simulado)</div>
-              <div class="pin" id="mapCriarPin" style="display:none;"></div>
-            </div>
-            <div class="map-coords">
-              <input id="jogoLat" type="text" placeholder="Lat" readonly />
-              <input id="jogoLng" type="text" placeholder="Lng" readonly />
-            </div>
-          </div>
+          <button class="btn btn-accent wide" type="submit">
+            <span class="material-symbols-rounded">upload</span>
+            Publicar Partida
+          </button>
+        </form>
+      </div>
+    </div>
 
-          <div class="form-row">
-            <div class="field checkbox">
-              <input id="jogoDividir" type="checkbox" />
-              <label for="jogoDividir">Dividir custo do aluguel automaticamente (simulado)</label>
-            </div>
-            <div class="field">
-              <label for="jogoObs">Observações</label>
-              <input id="jogoObs" type="text" placeholder="Ex.: Levar colete, 2 tempos de 25min" />
-            </div>
-          </div>
+    <!-- Match Page (dynamic) -->
+    <section class="container hidden" id="matchView">
+      <button class="btn btn-secondary" id="backToHome">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Voltar
+      </button>
 
-          <div class="actions">
-            <button class="btn btn-accent" type="submit">Publicar Partida</button>
-            <button class="btn btn-ghost" type="button" data-nav="#home">Cancelar</button>
+      <div class="match-hero">
+        <img src="" alt="Foto do local" id="matchPhoto" />
+        <div class="match-hero-info">
+          <h2 id="matchTitle">Título da Partida</h2>
+          <p class="match-meta">
+            <span id="matchDateTime"></span> • <span id="matchPlaceText"></span> • <span id="matchTypeText"></span>
+          </p>
+          <div class="map-placeholder tight">
+            <span class="material-symbols-rounded">map</span>
+            <span>Mapa da localização (integração futura)</span>
           </div>
-          <p class="hint">Chat com participantes disponível após publicar a partida.</p>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div>
+          <h3>Jogadores confirmados</h3>
+          <ul class="players-list" id="playersList"></ul>
+          <button class="btn btn-primary" id="confirmPresence">
+            <span class="material-symbols-rounded">check_circle</span>
+            Confirmar Presença
+          </button>
+        </div>
+        <div>
+          <h3>Chat da partida</h3>
+          <div class="chat" id="matchChatBox">
+            <div class="chat-messages" id="chatMessages"></div>
+            <form class="chat-input" id="chatForm">
+              <input type="text" id="chatMessageInput" placeholder="Escreva uma mensagem..." />
+              <button class="icon-btn" type="submit">
+                <span class="material-symbols-rounded">send</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Login/Register -->
+    <section class="container hidden" id="authView">
+      <div class="auth-card">
+        <h2>Login/Registrar</h2>
+        <form id="authForm" class="form">
+          <div class="field-group">
+            <label class="field-label" for="authName">Nome</label>
+            <input type="text" id="authName" placeholder="Seu nome" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="authEmail">Email</label>
+            <input type="email" id="authEmail" placeholder="seuemail@exemplo.com" required />
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="authLevel">Nível</label>
+            <select id="authLevel" required>
+              <option value="iniciante">Iniciante</option>
+              <option value="intermediario">Intermediário</option>
+              <option value="avancado">Avançado</option>
+            </select>
+          </div>
+          <button class="btn btn-primary wide" type="submit">
+            <span class="material-symbols-rounded">login</span>
+            Entrar
+          </button>
+
+          <div class="social-login">
+            <button class="btn btn-secondary" type="button" id="googleLogin">
+              <span class="material-symbols-rounded">account_circle</span>
+              Login via Google
+            </button>
+            <button class="btn btn-secondary" type="button" id="facebookLogin">
+              <span class="material-symbols-rounded">groups</span>
+              Login via Facebook
+            </button>
+          </div>
         </form>
       </div>
     </section>
 
-    <!-- Tela da Partida -->
-    <section id="partida" class="screen">
-      <div class="container">
-        <button class="btn btn-ghost back-btn" data-nav="#home">← Voltar</button>
-
-        <div class="match-header">
-          <div class="match-photo" id="partidaFoto" aria-label="Foto do local">🏟️</div>
-          <div class="match-info">
-            <h2 id="partidaTitulo">Partida</h2>
-            <div class="meta">
-              <span id="partidaLocal" class="badge"></span>
-              <span id="partidaDataHora" class="badge"></span>
-              <span id="partidaCampo" class="badge"></span>
-              <span id="partidaNivel" class="badge"></span>
-              <span id="partidaValor" class="badge"></span>
-              <span id="partidaGenero" class="badge"></span>
-            </div>
-            <div class="actions">
-              <button id="btnConfirmar" class="btn btn-primary">Confirmar Presença</button>
-              <button id="btnAbrirChat" class="btn btn-outline">Abrir Chat</button>
-            </div>
+    <!-- Profile -->
+    <section class="container hidden" id="profileView">
+      <div class="profile-card">
+        <div class="profile-header">
+          <div class="avatar" id="profileAvatar">F</div>
+          <div>
+            <h2 id="profileName">Nome</h2>
+            <p id="profileFavPos">Posição favorita: —</p>
+            <p id="profileLevel">Nível: —</p>
           </div>
+          <button class="btn btn-secondary" id="logoutBtn">
+            <span class="material-symbols-rounded">logout</span>
+            Sair
+          </button>
         </div>
 
-        <div class="match-body">
-          <div class="match-map" id="mapPartida">
-            <div class="map" aria-label="Mapa da partida">
-              <div class="pin" id="mapPartidaPin" style="display:none;"></div>
-            </div>
-          </div>
-
-          <div class="match-side">
-            <h3 class="section-title">Jogadores confirmados</h3>
-            <div id="listaJogadores" class="avatars"></div>
-
-            <h3 class="section-title">Detalhes</h3>
-            <ul class="details" id="partidaDetalhes"></ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Modal de Chat -->
-      <div id="chatModal" class="modal">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h3>Chat da Partida</h3>
-            <button class="btn btn-ghost modal-close" id="chatClose">✕</button>
-          </div>
-          <div id="chatMensagens" class="chat"></div>
-          <form id="chatForm" class="chat-input">
-            <input id="chatTexto" type="text" placeholder="Escreva uma mensagem..." required />
-            <button class="btn btn-primary" type="submit">Enviar</button>
-          </form>
-        </div>
-      </div>
-    </section>
-
-    <!-- Perfil do Usuário -->
-    <section id="perfil" class="screen">
-      <div class="container narrow">
-        <h2 class="page-title">Meu Perfil</h2>
-        <div class="profile-card">
-          <div class="profile-left">
-            <div id="perfilFoto" class="avatar-xl" aria-label="Foto do perfil">🙂</div>
-            <button id="perfilTrocarAvatar" class="btn btn-ghost btn-small">Trocar avatar</button>
-          </div>
-          <div class="profile-right">
-            <div class="field">
-              <label for="perfilNome">Nome</label>
-              <input id="perfilNome" type="text" placeholder="Seu nome" />
-            </div>
-            <div class="field">
-              <label for="perfilPosicao">Posição favorita</label>
-              <select id="perfilPosicao">
+        <div class="profile-edit">
+          <div class="two-cols">
+            <div class="field-group">
+              <label class="field-label" for="favPos">Posição favorita</label>
+              <select id="favPos">
                 <option value="">Selecione</option>
                 <option value="goleiro">Goleiro</option>
                 <option value="zagueiro">Zagueiro</option>
@@ -306,98 +316,65 @@
                 <option value="atacante">Atacante</option>
               </select>
             </div>
-            <div class="field">
-              <label for="perfilNivel">Nível</label>
-              <select id="perfilNivel">
-                <option value="iniciante">Iniciante</option>
-                <option value="intermediario">Intermediário</option>
-                <option value="avancado">Avançado</option>
-              </select>
+            <div class="field-group">
+              <label class="field-label" for="profilePhotoUrl">Foto (URL)</label>
+              <input type="url" id="profilePhotoUrl" placeholder="https://..." />
             </div>
-            <div class="stats">
-              <div class="stat">
-                <div class="stat-value" id="statPartidas">0</div>
-                <div class="stat-label">Partidas jogadas</div>
-              </div>
-              <div class="stat">
-                <div class="stat-value" id="statGols">0</div>
-                <div class="stat-label">Gols marcados</div>
-              </div>
-              <div class="stat">
-                <div class="stat-value" id="statRanking">0</div>
-                <div class="stat-label">Ranking de presença</div>
-              </div>
+          </div>
+          <button class="btn btn-primary" id="saveProfile">
+            <span class="material-symbols-rounded">save</span>
+            Salvar Perfil
+          </button>
+        </div>
+
+        <div class="profile-stats">
+          <h3>Estatísticas</h3>
+          <div class="stats-grid">
+            <div class="stat">
+              <span class="stat-value" id="statsMatches">0</span>
+              <span class="stat-label">Partidas jogadas</span>
             </div>
-            <div class="field">
-              <label for="perfilAvaliacoes">Avaliações recebidas</label>
-              <input id="perfilAvaliacoes" type="text" placeholder="Ex.: Pontual, Bom jogador" />
+            <div class="stat">
+              <span class="stat-value" id="statsGoals">0</span>
+              <span class="stat-label">Gols marcados</span>
             </div>
-            <div class="actions">
-              <button id="perfilSalvar" class="btn btn-primary">Salvar</button>
-              <button id="perfilSair" class="btn btn-outline">Sair</button>
+            <div class="stat">
+              <span class="stat-value" id="statsRating">—</span>
+              <span class="stat-label">Avaliações</span>
             </div>
           </div>
         </div>
 
-        <h3 class="section-title">Histórico de partidas</h3>
-        <div id="perfilHistorico" class="cards"></div>
-      </div>
-    </section>
-
-    <!-- Notificações -->
-    <section id="notificacoes" class="screen">
-      <div class="container narrow">
-        <h2 class="page-title">Notificações</h2>
-        <div id="notificacoesLista" class="notifications"></div>
-      </div>
-    </section>
-
-    <!-- Login / Registrar -->
-    <section id="login" class="screen">
-      <div class="container narrow">
-        <h2 class="page-title">Entrar</h2>
-        <div class="login-card">
-          <form id="loginForm" class="form">
-            <div class="field">
-              <label for="loginNome">Seu nome</label>
-              <input id="loginNome" type="text" placeholder="Como quer aparecer" required />
-            </div>
-            <div class="field">
-              <label for="loginEmail">Email</label>
-              <input id="loginEmail" type="email" placeholder="voce@email.com" required />
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Entrar</button>
-            </div>
-          </form>
-
-          <div class="login-divider">ou</div>
-
-          <div class="login-social">
-            <button id="loginGoogle" class="btn btn-ghost">Entrar com Google (simulado)</button>
-            <button id="loginFacebook" class="btn btn-ghost">Entrar com Facebook (simulado)</button>
-          </div>
+        <div class="profile-history">
+          <h3>Histórico de partidas</h3>
+          <ul id="historyList" class="history-list"></ul>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Rodapé -->
+  <!-- Footer -->
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <div class="logo-mark">⚽</div>
-        <div class="logo-text small">FUTNATICOS</div>
+        <span class="logo-icon material-symbols-rounded">stadium</span>
+        <span class="logo-text">Futnaticos</span>
       </div>
-      <div class="footer-links">
+      <nav class="footer-links">
         <a href="#" class="footer-link">Sobre</a>
         <a href="#" class="footer-link">Contato</a>
         <a href="#" class="footer-link">Política de Privacidade</a>
-      </div>
+      </nav>
       <div class="footer-social">
-        <a class="social" href="#" aria-label="Instagram">📸</a>
-        <a class="social" href="#" aria-label="X/Twitter">𝕏</a>
-        <a class="social" href="#" aria-label="YouTube">▶️</a>
+        <a href="#" aria-label="Instagram" class="social-btn">
+          <span class="material-symbols-rounded">photo_camera</span>
+        </a>
+        <a href="#" aria-label="X/Twitter" class="social-btn">
+          <span class="material-symbols-rounded">alternate_email</span>
+        </a>
+        <a href="#" aria-label="LinkedIn" class="social-btn">
+          <span class="material-symbols-rounded">work</span>
+        </a>
       </div>
     </div>
   </footer>
@@ -405,3 +382,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
